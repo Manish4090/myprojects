@@ -18,6 +18,12 @@
 					<x-nav-link :href="route('admin.customer')" :active="request()->routeIs('admin.customer')">
                         {{ __('Customers') }}
                     </x-nav-link>
+					<ul class="navbar-nav ml-auto">
+                        <!-- Authentication Links -->
+                        
+                          
+                           
+                    </ul>
                 </div>
             </div>
 

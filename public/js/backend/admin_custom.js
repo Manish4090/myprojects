@@ -10,7 +10,12 @@ var checked = $('#billingadd').is(':checked');
 //hide messages
 $('.alert').delay(5000).fadeOut('slow');
 
-
+$( function(){
+	  $( "#datepicker" ).datepicker();
+  });
+  $( function(){
+	  $( "#datepicker1" ).datepicker();
+  });
 
 
 // Generate a password string

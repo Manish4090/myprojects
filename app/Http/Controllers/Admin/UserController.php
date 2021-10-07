@@ -8,8 +8,11 @@ use App\Models\User;
 use App\Models\UsersAddress;
 use App\Models\Country;
 use App\Models\State;
+use App\Models\Admin;
 use DataTables;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+use DB;
 
 class UserController extends Controller
 {
@@ -121,5 +124,87 @@ class UserController extends Controller
 	public function deletecus(Request $request){
         User::find($request->id)->delete();
         return 1;
+    }
+	
+	public function usersmanagement(Request $request)
+    {
+		
+        $data = User::orderBy('id','DESC')->get();
+		//dd($data);
+        return view('admin.users.usersmanagement',compact('data'));
+    }
+	
+	
+	public function usersmanagementinfo($id){
+        $userManageDetails = User::find($id);
+		//dd($user);
+        return view('admin.users.user_management_show',compact('userManageDetails'));
+    }
+	
+	public function usersmanage(){
+        $roles = Role::pluck('name','name')->all();
+        return view('admin.users.create_user_management',compact('roles'));
+    }
+	
+	public function storeusersmanage(Request $request)
+    {
+        $input = $request->all();
+		//dd( $input);
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required',
+            'roles' => 'required'
+        ]);
+    
+        $input['password'] = Hash::make($input['password']);
+    
+        $user = User::create($input);
+        $user->assignRole($request->input('roles'));
+		
+        return view('admin.users.create_user_management')
+                        ->with('success','User created successfully');
+    }
+	
+	public function editusersmanage($id) {
+        $user = User::find($id);
+        $roles = Role::pluck('name','name')->all();
+        $userRole = $user->roles->pluck('name','name')->all();
+    
+        return view('admin.users.edit_user_management',compact('user','roles','userRole'));
+    }
+	
+	public function updateusersmanage(Request $request, $id)
+    {
+		
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'.$id,
+            'roles' => 'required'
+        ]);
+    
+        $input = $request->all();
+        if(!empty($input['password'])){ 
+            $input['password'] = Hash::make($input['password']);
+        }else{
+                        $input['password'] = Hash::make($input['password']); 
+        }
+    
+        $user = User::find($id);
+        $user->update($input);
+        DB::table('model_has_roles')->where('model_id',$id)->delete();
+    
+        $user->assignRole($request->input('roles'));
+		$data = User::orderBy('id','DESC')->get();
+        //return view('admin.users.usersmanagement',compact('data'))
+		return redirect('admin/usersmanagement')
+                        ->with('success','User updated successfully');
+    }
+	
+	public function userdestroy($id){
+        User::find($id)->delete();
+		$data = User::orderBy('id','DESC')->get();
+        return redirect('admin/usersmanagement')
+                        ->with('success','User deleted successfully');
     }
 }

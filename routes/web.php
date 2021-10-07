@@ -55,7 +55,22 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function(){
 		Route::any('addnew/customer', 'UserController@addnewusers')->name('addnewcustomer');
 		Route::any('addnewcus', 'UserController@addnewcus')->name('addnewcus');
 		
+		// User Management Routes
+		Route::any('usersmanagement', 'UserController@usersmanagement')->name('usersmanagement');
+		Route::any('usersmanagement/{id}', 'UserController@usersmanagementinfo')->name('usersmanagementinfo');
+		Route::any('create-users', 'UserController@usersmanage')->name('create-users');
+		Route::any('create-users-management', 'UserController@storeusersmanage')->name('create-users-management');
+		Route::any('edit-users-management/{id}', 'UserController@editusersmanage')->name('edit-users-management');
+		Route::post('update-users-management/{id}', 'UserController@updateusersmanage')->name('update-users-management');
+		Route::any('delete-users-management/{id}', 'UserController@userdestroy')->name('delete-users-management');
+		
+		// User Role Routes
+		Route::any('roles', 'RoleController@index')->name('roles');
+		
+		
 	});
 	Route::post('logout','Auth\AuthenticatedSessionController@destroy')->name('logout');
 	
 });
+
+

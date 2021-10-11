@@ -1,7 +1,4 @@
-@extends('layouts.app')
-
-
-@section('content')
+<x-admin-layout>
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
@@ -26,7 +23,7 @@
 @endif
 
 
-{!! Form::open(array('route' => 'roles.store','method'=>'POST')) !!}
+{!! Form::open(array('route' => 'admin.store-roles','method'=>'POST')) !!}
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
@@ -50,7 +47,4 @@
     </div>
 </div>
 {!! Form::close() !!}
-
-
-<p class="text-center text-primary"><small>Tutorial by ItSolutionStuff.com</small></p>
-@endsection
+</x-admin-layout>

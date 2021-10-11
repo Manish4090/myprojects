@@ -7,14 +7,28 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class AuthenticatedSessionController extends Controller
 {
+	use AuthenticatesUsers;
     /**
      * Display the login view.
      *
      * @return \Illuminate\View\View
      */
+	 protected function redirectTo()
+    {
+        if(Auth::user()->usertype == 'admin')
+        {
+            return 'dashboard';
+        }
+        else
+        {
+            return 'home';
+        }
+
+    }
     public function create()
     {
         return view('auth.login');
@@ -28,6 +42,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
+		//dd($request->all());
         $request->authenticate();
 
         $request->session()->regenerate();

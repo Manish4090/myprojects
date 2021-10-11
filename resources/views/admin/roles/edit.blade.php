@@ -1,14 +1,11 @@
-@extends('layouts.app')
-
-
-@section('content')
+<x-admin-layout>
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
             <h2>Edit Role</h2>
         </div>
         <div class="pull-right">
-            <a class="btn btn-primary" href="{{ route('roles.index') }}"> Back</a>
+            <a class="btn btn-primary" href="{{ route('admin.roles') }}"> Back</a>
         </div>
     </div>
 </div>
@@ -26,7 +23,7 @@
 @endif
 
 
-{!! Form::model($role, ['method' => 'PATCH','route' => ['roles.update', $role->id]]) !!}
+{!! Form::model($role, ['method' => 'PATCH','url' => ['admin/update-roles', $role->id]]) !!}
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
@@ -52,5 +49,4 @@
 {!! Form::close() !!}
 
 
-@endsection
-<p class="text-center text-primary"><small>Tutorial by ItSolutionStuff.com</small></p>
+</x-admin-layout>

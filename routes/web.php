@@ -66,11 +66,24 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function(){
 		
 		// User Role Routes
 		Route::any('roles', 'RoleController@index')->name('roles');
+		Route::any('edit-roles/{id}', 'RoleController@edit')->name('edit-roles');
+		Route::any('update-roles/{id}', 'RoleController@update')->name('update-roles');
+		Route::any('show-roles/{id}', 'RoleController@show')->name('show-roles');
+		Route::any('create-roles', 'RoleController@create')->name('create-roles');
+		Route::any('store-roles', 'RoleController@store')->name('store-roles');
+		Route::any('destroy-roles/{id}', 'RoleController@destroy')->name('destroy-roles');
 		
 		
 	});
 	Route::post('logout','Auth\AuthenticatedSessionController@destroy')->name('logout');
 	
+});
+
+  
+Route::group(['middleware' => ['auth']], function() {
+    Route::resource('roles', RoleController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('products', ProductController::class);
 });
 
 

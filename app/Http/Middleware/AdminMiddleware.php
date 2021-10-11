@@ -17,9 +17,18 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-		if(!Auth::guard('admin')->check()){
+		/*if(!Auth::guard('admin')->check()){
 			return redirect()->route('admin.login');
-		}
-        return $next($request);
+		}*/
+		//dd(Auth::user()->usertype);
+		if(Auth::user()->usertype == null)
+        {
+			//dd("sdfjdk");
+            return redirect('/home')->with('message','You are not Login to AdminPanel');
+        }
+        else
+        {
+            return $next($request);
+        }
     }
 }

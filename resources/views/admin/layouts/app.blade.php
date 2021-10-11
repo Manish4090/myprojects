@@ -42,7 +42,9 @@
 
             <!-- Page Content -->
             <main>
+			<div class="container">
                 {{ @$slot }}
+			</div>	
             </main>
         </div>
     </body>

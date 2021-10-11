@@ -1,7 +1,4 @@
-@extends('layouts.app')
-
-
-@section('content')
+<x-app-layout>
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
@@ -52,5 +49,4 @@
 {!! Form::close() !!}
 
 
-@endsection
-<p class="text-center text-primary"><small>Tutorial by ItSolutionStuff.com</small></p>
+</x-app-layout>
